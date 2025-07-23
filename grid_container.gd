@@ -120,7 +120,7 @@ func hard(count: int) -> void:
 
 func extreme(count: int) -> void:
 	var selected: Array = constants.slice(0, min(count, constants.size()))
-	for c in selected:
+	for c:Dictionary in selected:
 		var btn: Button = Button.new()
 		add_child(btn)
 		btn.text = c["name"]
@@ -186,7 +186,7 @@ func _generate_hard_colors(count: int) -> Array[Color]:
 		var c:Color
 		while c == Color.BLACK:
 			c = Color(randi() % 2,randi() % 2,randi() % 2)
-		var t = float(i) / max(1, count - 1)
+		var t:float = float(i) / max(1, count - 1)
 		colors.append(Color(lerp(0.2, 0.9, t), lerp(0.2, 0.9, t), lerp(0.2, 0.9, t)) * c)
 	return colors
 
@@ -201,7 +201,7 @@ func _generate_extreme_colors(count: int) -> Array[Color]:
 func _compare_color_sum(a: Color, b: Color) -> int:
 	var sum_a: float = a.r + a.g + a.b
 	var sum_b: float = b.r + b.g + b.b
-	return signi(sum_b - sum_a)
+	return signi(int(sum_b - sum_a))
 
 func signi(x: float) -> int:
 	return -1 if x < 0 else (1 if x > 0 else 0)
@@ -275,9 +275,9 @@ func handle_drag_direction(diff: Vector2) -> void:
 	else:
 		move_it("Down" if diff.y > 0 else "Up")
 		
-func sort_children_by_name():
+func sort_children_by_name() -> void:
 	# Get all child nodes
-	var children = get_children()
+	var children:Array[Node] = get_children()
 	
 	# Sort the children by their name (using the custom comparison function)
 	#children.sort_custom(_compare_children_by_name)
@@ -297,11 +297,11 @@ func _compare_children_by_name(a: Node, b: Node) -> int:
 		return 1
 	
 	# Try converting names to float for sorting as numbers
-	var name_a = String(a.name)
-	var name_b = String(b.name)
+	var name_a:String = String(a.name)
+	var name_b:String = String(b.name)
 
-	var float_a = name_a.to_float()
-	var float_b = name_b.to_float()
+	var float_a:float = name_a.to_float()
+	var float_b:float = name_b.to_float()
 	
 	if float_a < float_b:
 		return -1

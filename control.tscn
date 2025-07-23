@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://b8xwnf5l7facf" path="res://bgm.gd" id="5_am1vj"]
 [ext_resource type="Script" uid="uid://bdchh7243dshj" path="res://ok.gd" id="5_kbped"]
 [ext_resource type="Script" uid="uid://ca8admkuu475u" path="res://option_button.gd" id="6_g31lc"]
+[ext_resource type="AudioStream" uid="uid://v34irx2edvtg" path="res://BGM/Acoustic Guitar.mp3" id="6_knq72"]
 [ext_resource type="Script" uid="uid://bs6s3t81fsnv3" path="res://color_picker.gd" id="7_iy58a"]
 [ext_resource type="Texture2D" uid="uid://bb4aqbb78agtq" path="res://audiowarning.png" id="8_eh0v1"]
 [ext_resource type="AudioStream" uid="uid://dq8u4et7uv5l7" path="res://swoosh.mp3" id="8_sky72"]
@@ -31,8 +32,6 @@ corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
-
-[sub_resource type="AudioStreamMP3" id="AudioStreamMP3_am1vj"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -204,8 +203,7 @@ size_flags_horizontal = 3
 
 [node name="BGM" type="AudioStreamPlayer" parent="Menu/Center/Lines/BGM"]
 unique_name_in_owner = true
-stream = SubResource("AudioStreamMP3_am1vj")
-volume_db = -80.0
+stream = ExtResource("6_knq72")
 
 [node name="Type" type="HBoxContainer" parent="Menu/Center/Lines"]
 unique_name_in_owner = true
@@ -221,7 +219,7 @@ vertical_alignment = 1
 custom_minimum_size = Vector2(0, 35)
 layout_mode = 2
 size_flags_horizontal = 3
-selected = 1
+selected = 0
 item_count = 2
 popup/item_0/text = "Numbers"
 popup/item_0/id = 0
@@ -243,16 +241,16 @@ custom_minimum_size = Vector2(0, 35)
 layout_mode = 2
 size_flags_horizontal = 3
 alignment = 1
-selected = 0
+selected = 3
 item_count = 4
 popup/item_0/text = "Demo"
 popup/item_0/id = 0
 popup/item_1/text = "Normal"
-popup/item_1/id = 2
+popup/item_1/id = 1
 popup/item_2/text = "Hard"
-popup/item_2/id = 3
+popup/item_2/id = 2
 popup/item_3/text = "Extreme"
-popup/item_3/id = 4
+popup/item_3/id = 3
 script = ExtResource("6_g31lc")
 
 [node name="Separator" type="Control" parent="Menu/Center/Lines"]

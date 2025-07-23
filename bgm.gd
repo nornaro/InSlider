@@ -10,10 +10,23 @@ var current_index: int = 0
 var is_manual_selection: bool = false
 
 func _ready() -> void:
-	load_bgm_files("res://BGM/")
+	%BGM.volume_linear = 0.1
+	load_bgm_files(find_mp3_in_known_paths())
 	populate_option_button()
 	shuffle_play_order()
 	play_next()
+
+func find_mp3_in_known_paths() -> String:
+	var paths := ["./BGM/", "res://BGM/", "user://BGM/"]
+
+	for path in paths:
+		if not DirAccess.dir_exists_absolute(path):
+			continue
+		var files := DirAccess.get_files_at(path)
+		for file in files:
+			if file.to_lower().ends_with(".mp3"):
+				return path
+	return ""
 
 func load_bgm_files(path: String) -> void:
 	var dir: DirAccess = DirAccess.open(path)
@@ -76,7 +89,6 @@ func play_track(index: int) -> void:
 func _on_BGM_finished() -> void:
 	play_next()
 
-func _on_OptionButton_item_selected(index: int) -> void:
-	if is_manual_selection:
-		return
+
+func _on_option_button_item_selected(index: int) -> void:
 	play_track(index)

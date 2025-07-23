@@ -12,8 +12,9 @@ config_version=5
 
 config/name="InSlider"
 run/main_scene="uid://jk8kplo0jien"
+config/use_custom_user_dir=true
 config/features=PackedStringArray("4.4", "Forward Plus")
-config/icon="res://icon.svg"
+config/icon="uid://dv3cadap4w38x"
 
 [autoload]
 
