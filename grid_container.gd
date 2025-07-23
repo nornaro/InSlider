@@ -1,14 +1,15 @@
 extends GridContainer
 
 var group: ButtonGroup = ButtonGroup.new()
-var menu_index:int = 0
+var menu_index: int = 0
 var menu: Button
 
-var dragging := false
-var drag_start := Vector2.ZERO
-var deadzone := 10.0
+var dragging: bool = false
+var drag_start: Vector2 = Vector2.ZERO
+var deadzone: float = 10.0
 
 var constants: Array[Dictionary] = [
+	# (változatlanul meghagyva a konstansokat)
 	{"name": "pi", "value": "3.1415926536", "desc": "The ratio of a circle's circumference to its diameter, a fundamental mathematical constant appearing in geometry, trigonometry, and many other fields."},
 	{"name": "tau", "value": "6.2831853072", "desc": "Tau constant, equal to 2 times pi (2π), often used in circle-related calculations and considered by some to be more natural than pi."},
 	{"name": "e", "value": "2.7182818285", "desc": "Euler's number, the base of the natural logarithm, crucial in exponential growth, differential equations, and complex analysis."},
@@ -37,43 +38,47 @@ var constants: Array[Dictionary] = [
 
 func _ready() -> void:
 	start()
-	
+
 func start() -> void:
 	clear_children()
+
+	Global.size = clamp(Global.size, 1, 256)
 	columns = Global.size
-	var count:int = Global.size * Global.size
-	
-	if $"../Menu/Center/Lines/Type/OptionButton".selected == 0:
+	var count: int = Global.size * Global.size - 1  # Menü gomb miatt -1
+
+	var type_button := $"../Menu/Center/Lines/Type/OptionButton"
+
+	if type_button.selected == 0:
 		match Global.difficulty:
-			0:
-				demo(count)
-			1:
+			0, 1:
 				demo(count)
 			2:
 				hard(count)
 			3:
 				Global.size = 5
+				columns = Global.size
+				count = Global.size * Global.size - 1
 				extreme(count)
+	if type_button.selected == 1:
+		var max_size: int = 16 if Global.difficulty <= 1 else 256
 
-	if $"../Menu/Center/Lines/Type/OptionButton".selected == 1:
+		Global.size = clamp(Global.size, 1, max_size)
+		columns = Global.size
+		count = Global.size * Global.size - 1
 		match Global.difficulty:
-			0:
-				Global.size = clamp(Global.size,1,16)
-				demo_colors(count)
-			1:
-				Global.size = clamp(Global.size,1,16)
+			0, 1:
 				demo_colors(count)
 			2:
-				Global.size = clamp(Global.size,1,256)
 				hard_colors(count)
 			3:
-				Global.size = clamp(Global.size,1,256)
 				extreme_colors(count)
 
 	if Global.difficulty > 0:
 		shuffle_buttons()
+	sort_children_by_name()
 	add_menu()
 	
+
 func add_menu() -> void:
 	menu = Button.new()
 	menu.flat = true
@@ -85,69 +90,138 @@ func add_menu() -> void:
 	menu.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	menu_index = menu.get_index()
 
-func demo(count:int) -> void:
-	for i in count-1:
-		var btn:Button = Button.new()
+func demo(count: int) -> void:
+	for i in range(count):
+		var btn: Button = Button.new()
 		add_child(btn)
-		btn.text = str(i+1)
+		btn.text = str(i + 1)
 		btn.name = btn.text
+		btn.modulate = Color(1, 1, 1)
+		btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		btn.size_flags_vertical = Control.SIZE_EXPAND_FILL
+
+func hard(count: int) -> void:
+	var values: Array[float] = []
+	while values.size() < count:
+		var num: float = snapped(randf_range(0.1, 9999.9), 0.01)
+		var str_num: String = str(num).rstrip("0").rstrip(".")
+		if str_num.length() <= 4:
+			values.append(num)
+	values.sort()
+	for num in values:
+		var btn: Button = Button.new()
+		add_child(btn)
+		var label: String = str(num).rstrip("0").rstrip(".")
+		btn.text = label
+		btn.name = label
+		btn.modulate = Color(1, 1, 1)
 		btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		btn.size_flags_vertical = Control.SIZE_EXPAND_FILL
 
 func extreme(count: int) -> void:
-	var selected = constants.slice(0, min(count, constants.size()))
-	for constants in selected:
-		var btn := Button.new()
+	var selected: Array = constants.slice(0, min(count, constants.size()))
+	for c in selected:
+		var btn: Button = Button.new()
 		add_child(btn)
-		btn.text = constants["name"]
-		btn.name = constants["name"]
-		btn.tooltip_text = (constants["name"]+"\n"+constants["value"]+"\n"+constants["desc"])
+		btn.text = c["name"]
+		btn.name = c["name"]
+		btn.tooltip_text = "%s\n%s\n%s" % [c["name"], c["value"], c["desc"]]
+		btn.modulate = Color(1, 1, 1)
+		btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		btn.size_flags_vertical = Control.SIZE_EXPAND_FILL
 
-
-func hard(count: int) -> void:
-	var values: Array[float] = []
-	
-	while values.size() < count:
-		var num: float = randf_range(0.1, 9999.9)
-		num = snapped(num, 0.01)  # Round to 2 decimal places
-
-		var num_str: String = str(num)
-		
-		# Remove trailing zeroes in floats like 1.00 → 1, 2.10 → 2.1
-		if "." in num_str:
-			num_str = num_str.rstrip("0").rstrip(".")
-		
-		# Limit to 4 characters max (optional truncation, depends on need)
-		if num_str.length() <= 4:
-			values.append(num)
-
-	# Sort numerically
-	values.sort()
-
-	# Create buttons
-	for num in values:
-		var btn := Button.new()
+func demo_colors(count: int) -> void:
+	var colors: Array[Color] = _generate_demo_colors(count)
+	for i in range(count):
+		var btn: Button = Button.new()
 		add_child(btn)
-		var label := str(num)
-		if "." in label:
-			label = label.rstrip("0").rstrip(".")
-		btn.text = label
-		btn.name = label
+		btn.add_theme_stylebox_override("normal", StyleBoxFlat.new())
+		btn.text = ""
+		btn.tooltip_text = str(colors[i].linear_to_srgb())
+		btn.name = str(colors[i].r+colors[i].b+colors[i].g)
+		btn.modulate = colors[i]
+		btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		btn.size_flags_vertical = Control.SIZE_EXPAND_FILL
 
+func hard_colors(count: int) -> void:
+	var colors: Array[Color] = _generate_hard_colors(count)
+	for i in range(count):
+		var btn: Button = Button.new()
+		add_child(btn)
+		btn.add_theme_stylebox_override("normal", StyleBoxFlat.new())
+		btn.text = ""
+		btn.tooltip_text = str(colors[i])
+		btn.name = str(colors[i].r+colors[i].b+colors[i].g)
+		btn.modulate = colors[i]
+		btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		btn.size_flags_vertical = Control.SIZE_EXPAND_FILL
+
+func extreme_colors(count: int) -> void:
+	var colors: Array[Color] = _generate_extreme_colors(count)
+	for i in range(count):
+		var btn: Button = Button.new()
+		add_child(btn)
+		btn.add_theme_stylebox_override("normal", StyleBoxFlat.new())
+		btn.text = ""
+		btn.tooltip_text = str(colors[i])
+		btn.name = str(colors[i].r+colors[i].b+colors[i].g)
+		btn.modulate = colors[i]
+		btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		btn.size_flags_vertical = Control.SIZE_EXPAND_FILL
+
+func _generate_demo_colors(count: int) -> Array[Color]:
+	var c:Color
+	while c == Color.BLACK:
+		c = Color(randi() % 2,randi() % 2,randi() % 2)
+	var colors: Array[Color] = []
+	for i in range(count):
+		var t: float = float(i) / max(1, count - 1)
+		var value: float = lerp(0.0, 1.0, t)
+		colors.append(Color(value, value, value) * c)
+	return colors
+
+func _generate_hard_colors(count: int) -> Array[Color]:
+	var colors: Array[Color] = []
+	for i in range(count):
+		var c:Color
+		while c == Color.BLACK:
+			c = Color(randi() % 2,randi() % 2,randi() % 2)
+		var t = float(i) / max(1, count - 1)
+		colors.append(Color(lerp(0.2, 0.9, t), lerp(0.2, 0.9, t), lerp(0.2, 0.9, t)) * c)
+	return colors
+
+
+func _generate_extreme_colors(count: int) -> Array[Color]:
+	var colors: Array[Color] = []
+	for i in range(count):
+		colors.append(Color(randf(), randf(), randf()))
+	colors.sort_custom(Callable(self, "_compare_color_sum"))
+	return colors
+
+func _compare_color_sum(a: Color, b: Color) -> int:
+	var sum_a: float = a.r + a.g + a.b
+	var sum_b: float = b.r + b.g + b.b
+	return signi(sum_b - sum_a)
+
+func signi(x: float) -> int:
+	return -1 if x < 0 else (1 if x > 0 else 0)
+
+func _color_lerp(a: Color, b: Color, t: float) -> Color:
+	return Color(
+		lerp(a.r, b.r, t),
+		lerp(a.g, b.g, t),
+		lerp(a.b, b.b, t),
+		lerp(a.a, b.a, t)
+	)
 
 func clear_children() -> void:
 	for child in get_children():
 		child.queue_free()
 
 func shuffle_buttons() -> void:
-	var buttons := []
-	
-	for child in get_children():
-		buttons.append(child)
-	
+	var buttons: Array[Node] = get_children()
 	buttons.shuffle()
-
-	for btn:Button in buttons:
+	for btn in buttons:
 		remove_child(btn)
 		add_child(btn)
 
@@ -158,35 +232,24 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("mute"):
 		%Volume.mute()
 		return
-	if (!event.is_action_pressed("ui_left") and
-		!event.is_action_pressed("ui_right") and
-		!event.is_action_pressed("ui_up") and
-		!event.is_action_pressed("ui_down")):
+	if not (event.is_action_pressed("ui_left") or event.is_action_pressed("ui_right") or event.is_action_pressed("ui_up") or event.is_action_pressed("ui_down")):
 		return
 	move_it(event.as_text())
 
 func _input(event: InputEvent) -> void:
-	if event is InputEventMouseButton:
-		if event.button_index != MOUSE_BUTTON_LEFT:
-			return
-		if event.pressed:
-			dragging = true
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		dragging = event.pressed
+		if dragging:
 			drag_start = event.position
-			return
-		dragging = false
-	
-	if event is InputEventMouseMotion:
-		if !dragging:
-			return
-		var diff:Vector2 = event.position - drag_start
+	elif event is InputEventMouseMotion and dragging:
+		var diff: Vector2 = event.position - drag_start
 		if diff.length() > deadzone:
 			handle_drag_direction(diff)
 			dragging = false
-	
+
 func move_it(event_text: String) -> void:
-	var index := menu.get_index()
-	var target := -1
-	
+	var index: int = menu.get_index()
+	var target: int = -1
 	match event_text:
 		"Right":
 			if index % Global.size > 0:
@@ -200,83 +263,49 @@ func move_it(event_text: String) -> void:
 		"Up":
 			if index < Global.size * (Global.size - 1):
 				target = index + Global.size
-	
 	if target >= 0 and target < get_child_count():
-		var btn := get_child(target)
+		var btn: Control = get_child(target)
 		move_child(menu, target)
 		move_child(btn, index)
 		%Move.swoosh()
 
 func handle_drag_direction(diff: Vector2) -> void:
 	if abs(diff.x) > abs(diff.y):
-		if diff.x > 0:
-			move_it("Right")
-		else:
-			move_it("Left")
+		move_it("Right" if diff.x > 0 else "Left")
 	else:
-		if diff.y > 0:
-			move_it("Down")
-		else:
-			move_it("Up")
+		move_it("Down" if diff.y > 0 else "Up")
+		
+func sort_children_by_name():
+	# Get all child nodes
+	var children = get_children()
+	
+	# Sort the children by their name (using the custom comparison function)
+	#children.sort_custom(_compare_children_by_name)
+	
+	# Reorder children after sorting
+	for i in range(children.size()):
+		move_child(children[i], i)
 
-func demo_colors(count: int) -> Array:
-	var colors := []
-	
-	# Véletlenszerűen válassz ki 1-3 komponenst (R,G,B)
-	var components := []
-	
-	var comp_options = ["r", "g", "b"]
-	var n_comp = randi() % 3 + 1  # 1, 2 vagy 3 komponens
-	
-	while components.size() < n_comp:
-		var candidate = comp_options[randi() % comp_options.size()]
-		if candidate not in components:
-			components.append(candidate)
-	
-	for i in range(count):
-		var t = float(i) / max(1, count - 1)
-		var r = t if "r" in components else 0.0
-		var g = t if "g" in components else 0.0
-		var b = t if "b" in components else 0.0
-		colors.append(Color(r, g, b))
-	
-	return colors
-
-func hard_colors(count: int) -> Array:
-	var colors := []
-	var start_color = Color(1, 0, 0) # piros
-	var end_color = Color(0, 0, 1)   # kék
-	
-	for i in range(count):
-		var t = float(i) / max(1, count - 1)
-		var c = color_lerp(start_color, end_color, t)
-		colors.append(c)
-	return colors
-
-
-func extreme_colors(count: int) -> Array:
-	var colors := []
-	for i in range(count):
-		var c = Color(randf(), randf(), randf())
-		colors.append(c)
-	
-	# rendezés R+G+B alapján
-	colors.sort_custom(_compare_color_sum)
-	return colors
-	
-func _compare_color_sum(a: Color, b: Color) -> int:
-	var sum_a = a.r + a.g + a.b
-	var sum_b = b.r + b.g + b.b
-	if sum_a < sum_b:
+# Helper function to compare nodes by their name
+func _compare_children_by_name(a: Node, b: Node) -> int:
+	# Skip sorting if one of the names is "Menu"
+	if a.name == "Menu" and b.name == "Menu":
+		return 0
+	elif a.name == "Menu":
 		return -1
-	if sum_a > sum_b:
+	elif b.name == "Menu":
 		return 1
-	return 0
+	
+	# Try converting names to float for sorting as numbers
+	var name_a = String(a.name)
+	var name_b = String(b.name)
 
-func color_lerp(a: Color, b: Color, t: float) -> Color:
-	return Color(
-		lerp(a.r, b.r, t),
-		lerp(a.g, b.g, t),
-		lerp(a.b, b.b, t),
-		lerp(a.a, b.a, t)
-	)
+	var float_a = name_a.to_float()
+	var float_b = name_b.to_float()
+	
+	if float_a < float_b:
+		return -1
+	elif float_a > float_b:
+		return 1
+	else:
+		return 0

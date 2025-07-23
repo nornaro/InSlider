@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://jk8kplo0jien"]
+[gd_scene load_steps=19 format=3 uid="uid://jk8kplo0jien"]
 
 [ext_resource type="Script" uid="uid://dryk81ij7ufr8" path="res://grid_container.gd" id="1_0fbet"]
 [ext_resource type="Script" uid="uid://csq85rr7lju30" path="res://menu.gd" id="2_62e2m"]
@@ -16,6 +16,8 @@
 [ext_resource type="Script" uid="uid://b1ijrue340lg1" path="res://warning.gd" id="9_eh0v1"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iy58a"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g31lc"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qtu10"]
 bg_color = Color(0.0509804, 0, 0, 1)
@@ -65,8 +67,10 @@ theme_override_constants/v_separation = 5
 script = ExtResource("1_0fbet")
 
 [node name="0" type="Button" parent="Field"]
+modulate = Color(1, 0, 0, 1)
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_g31lc")
 text = "1"
 icon_alignment = 1
 
