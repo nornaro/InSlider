@@ -1,0 +1,367 @@
+[gd_scene load_steps=18 format=3 uid="uid://jk8kplo0jien"]
+
+[ext_resource type="Script" uid="uid://dryk81ij7ufr8" path="res://grid_container.gd" id="1_0fbet"]
+[ext_resource type="Script" uid="uid://csq85rr7lju30" path="res://menu.gd" id="2_62e2m"]
+[ext_resource type="Script" uid="uid://cvvfufl1g0idf" path="res://cancel.gd" id="3_ee4bf"]
+[ext_resource type="Script" uid="uid://8ojsstfyw2do" path="res://button.gd" id="3_fj5cn"]
+[ext_resource type="Script" uid="uid://c1qsodnd6gha0" path="res://save.gd" id="4_kbped"]
+[ext_resource type="Script" uid="uid://blxub02b8hwat" path="res://volume.gd" id="4_pxugv"]
+[ext_resource type="Script" uid="uid://b8xwnf5l7facf" path="res://bgm.gd" id="5_am1vj"]
+[ext_resource type="Script" uid="uid://bdchh7243dshj" path="res://ok.gd" id="5_kbped"]
+[ext_resource type="Script" uid="uid://ca8admkuu475u" path="res://option_button.gd" id="6_g31lc"]
+[ext_resource type="Script" uid="uid://bs6s3t81fsnv3" path="res://color_picker.gd" id="7_iy58a"]
+[ext_resource type="Texture2D" uid="uid://bb4aqbb78agtq" path="res://audiowarning.png" id="8_eh0v1"]
+[ext_resource type="AudioStream" uid="uid://dq8u4et7uv5l7" path="res://swoosh.mp3" id="8_sky72"]
+[ext_resource type="Script" uid="uid://dkhkwq486o6wc" path="res://move.gd" id="9_0ytqx"]
+[ext_resource type="Script" uid="uid://b1ijrue340lg1" path="res://warning.gd" id="9_eh0v1"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iy58a"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qtu10"]
+bg_color = Color(0.0509804, 0, 0, 1)
+border_width_left = 150
+border_width_top = 150
+border_width_right = 150
+border_width_bottom = 150
+border_color = Color(0, 0, 0, 1)
+border_blend = true
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="AudioStreamMP3" id="AudioStreamMP3_am1vj"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_iy58a")
+
+[node name="Field" type="GridContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 5
+theme_override_constants/v_separation = 5
+script = ExtResource("1_0fbet")
+
+[node name="0" type="Button" parent="Field"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+text = "1"
+icon_alignment = 1
+
+[node name="Menu" type="Control" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_62e2m")
+
+[node name="Panel" type="Panel" parent="Menu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_qtu10")
+
+[node name="Center" type="MarginContainer" parent="Menu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 150
+theme_override_constants/margin_top = 150
+theme_override_constants/margin_right = 150
+theme_override_constants/margin_bottom = 150
+
+[node name="Lines" type="VBoxContainer" parent="Menu/Center"]
+layout_mode = 2
+
+[node name="Color" type="HBoxContainer" parent="Menu/Center/Lines"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Menu/Center/Lines/Color"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Color"
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="Menu/Center/Lines/Color"]
+custom_minimum_size = Vector2(35, 35)
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("3_fj5cn")
+
+[node name="Size" type="HBoxContainer" parent="Menu/Center/Lines"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Menu/Center/Lines/Size"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Size"
+vertical_alignment = 1
+
+[node name="Text" type="TextEdit" parent="Menu/Center/Lines/Size"]
+custom_minimum_size = Vector2(35, 35)
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Grid size will be size*size"
+placeholder_text = "1"
+
+[node name="Volume" type="HBoxContainer" parent="Menu/Center/Lines"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(35, 0)
+layout_mode = 2
+script = ExtResource("4_pxugv")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Menu/Center/Lines/Volume"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="Menu/Center/Lines/Volume/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Volume"
+vertical_alignment = 1
+
+[node name="Unlock" type="CheckButton" parent="Menu/Center/Lines/Volume/HBoxContainer"]
+custom_minimum_size = Vector2(0, 35)
+layout_mode = 2
+tooltip_text = "WARNING!!
+Unlocking allows you to set volume from 0.01% to 1000%
+"
+text = "Unlock"
+
+[node name="HSlider" type="HSlider" parent="Menu/Center/Lines/Volume"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+value = 10.0
+rounded = true
+
+[node name="TextEdit" type="TextEdit" parent="Menu/Center/Lines/Volume"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BGM" type="HBoxContainer" parent="Menu/Center/Lines"]
+layout_mode = 2
+script = ExtResource("5_am1vj")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Menu/Center/Lines/BGM"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="Menu/Center/Lines/BGM/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "BGM"
+vertical_alignment = 1
+
+[node name="Loop" type="CheckButton" parent="Menu/Center/Lines/BGM/HBoxContainer"]
+custom_minimum_size = Vector2(0, 35)
+layout_mode = 2
+text = "Loop"
+
+[node name="OptionButton" type="OptionButton" parent="Menu/Center/Lines/BGM"]
+custom_minimum_size = Vector2(0, 35)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BGM" type="AudioStreamPlayer" parent="Menu/Center/Lines/BGM"]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamMP3_am1vj")
+volume_db = -80.0
+
+[node name="Type" type="HBoxContainer" parent="Menu/Center/Lines"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Menu/Center/Lines/Type"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Type"
+vertical_alignment = 1
+
+[node name="OptionButton" type="OptionButton" parent="Menu/Center/Lines/Type"]
+custom_minimum_size = Vector2(0, 35)
+layout_mode = 2
+size_flags_horizontal = 3
+selected = 1
+item_count = 2
+popup/item_0/text = "Numbers"
+popup/item_0/id = 0
+popup/item_1/text = "RGB"
+popup/item_1/id = 1
+
+[node name="Difficulty" type="HBoxContainer" parent="Menu/Center/Lines"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Menu/Center/Lines/Difficulty"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Difficullty"
+vertical_alignment = 1
+
+[node name="OptionButton" type="OptionButton" parent="Menu/Center/Lines/Difficulty"]
+custom_minimum_size = Vector2(0, 35)
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+selected = 0
+item_count = 4
+popup/item_0/text = "Demo"
+popup/item_0/id = 0
+popup/item_1/text = "Normal"
+popup/item_1/id = 2
+popup/item_2/text = "Hard"
+popup/item_2/id = 3
+popup/item_3/text = "Extreme"
+popup/item_3/id = 4
+script = ExtResource("6_g31lc")
+
+[node name="Separator" type="Control" parent="Menu/Center/Lines"]
+custom_minimum_size = Vector2(0, 35)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Controls" type="HBoxContainer" parent="Menu/Center/Lines"]
+custom_minimum_size = Vector2(0, 35)
+layout_mode = 2
+
+[node name="Cancel" type="Button" parent="Menu/Center/Lines/Controls"]
+custom_minimum_size = Vector2(60, 35)
+layout_mode = 2
+text = "Cancel"
+script = ExtResource("3_ee4bf")
+
+[node name="Control" type="Control" parent="Menu/Center/Lines/Controls"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Reset" type="Button" parent="Menu/Center/Lines/Controls"]
+visible = false
+custom_minimum_size = Vector2(60, 35)
+layout_mode = 2
+text = "Reset"
+script = ExtResource("3_ee4bf")
+
+[node name="Control3" type="Control" parent="Menu/Center/Lines/Controls"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Save" type="Button" parent="Menu/Center/Lines/Controls"]
+custom_minimum_size = Vector2(60, 35)
+layout_mode = 2
+text = "Save"
+script = ExtResource("4_kbped")
+
+[node name="Control2" type="Control" parent="Menu/Center/Lines/Controls"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Ok" type="Button" parent="Menu/Center/Lines/Controls"]
+custom_minimum_size = Vector2(60, 35)
+layout_mode = 2
+text = "Ok"
+script = ExtResource("5_kbped")
+
+[node name="Warning" type="TextureRect" parent="Menu"]
+visible = false
+top_level = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("8_eh0v1")
+expand_mode = 1
+script = ExtResource("9_eh0v1")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Menu/Warning"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -8.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="LineEdit" type="LineEdit" parent="Menu/Warning/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Write YES to acknowledge and press button"
+alignment = 1
+
+[node name="Button" type="Button" parent="Menu/Warning/HBoxContainer"]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+text = "I Acknowledge"
+
+[node name="ColorPicker" type="ColorPicker" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+offset_left = 372.0
+offset_top = 50.0
+offset_right = 670.0
+offset_bottom = 622.0
+script = ExtResource("7_iy58a")
+
+[node name="Button" type="Button" parent="ColorPicker"]
+layout_mode = 2
+text = "OK"
+script = ExtResource("3_fj5cn")
+
+[node name="Move" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("8_sky72")
+volume_db = -25.0
+script = ExtResource("9_0ytqx")
+
+[connection signal="pressed" from="Menu/Center/Lines/Color/Button" to="Menu/Center/Lines/Color/Button" method="_on_pressed"]
+[connection signal="toggled" from="Menu/Center/Lines/Volume/HBoxContainer/Unlock" to="Menu/Center/Lines/Volume" method="_on_unlock_toggled"]
+[connection signal="changed" from="Menu/Center/Lines/Volume/HSlider" to="Menu/Center/Lines/Volume" method="_on_h_slider_changed"]
+[connection signal="text_changed" from="Menu/Center/Lines/Volume/TextEdit" to="Menu/Center/Lines/Volume" method="_on_text_edit_text_changed"]
+[connection signal="item_selected" from="Menu/Center/Lines/BGM/OptionButton" to="Menu/Center/Lines/BGM" method="_on_option_button_item_selected"]
+[connection signal="pressed" from="Menu/Center/Lines/Controls/Cancel" to="Menu/Center/Lines/Controls/Cancel" method="_on_pressed"]
+[connection signal="pressed" from="Menu/Center/Lines/Controls/Reset" to="Menu/Center/Lines/Controls/Reset" method="_on_pressed"]
+[connection signal="pressed" from="Menu/Center/Lines/Controls/Save" to="Menu/Center/Lines/Controls/Save" method="_on_pressed"]
+[connection signal="pressed" from="Menu/Center/Lines/Controls/Ok" to="Menu/Center/Lines/Controls/Ok" method="_on_pressed"]
+[connection signal="pressed" from="Menu/Warning/HBoxContainer/Button" to="Menu/Warning" method="_on_button_pressed"]
+[connection signal="color_changed" from="ColorPicker" to="ColorPicker" method="_on_color_changed"]
+[connection signal="pressed" from="ColorPicker/Button" to="ColorPicker/Button" method="_on_pressed"]
