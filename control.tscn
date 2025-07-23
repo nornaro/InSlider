@@ -8,9 +8,9 @@
 [ext_resource type="Script" uid="uid://blxub02b8hwat" path="res://volume.gd" id="4_pxugv"]
 [ext_resource type="Script" uid="uid://b8xwnf5l7facf" path="res://bgm.gd" id="5_am1vj"]
 [ext_resource type="Script" uid="uid://bdchh7243dshj" path="res://ok.gd" id="5_kbped"]
-[ext_resource type="Script" uid="uid://ca8admkuu475u" path="res://option_button.gd" id="6_g31lc"]
 [ext_resource type="AudioStream" uid="uid://v34irx2edvtg" path="res://BGM/Acoustic Guitar.mp3" id="6_knq72"]
 [ext_resource type="Script" uid="uid://bs6s3t81fsnv3" path="res://color_picker.gd" id="7_iy58a"]
+[ext_resource type="Script" uid="uid://bb0nabvk2lkhl" path="res://language.gd" id="7_knq72"]
 [ext_resource type="Texture2D" uid="uid://bb4aqbb78agtq" path="res://audiowarning.png" id="8_eh0v1"]
 [ext_resource type="AudioStream" uid="uid://dq8u4et7uv5l7" path="res://swoosh.mp3" id="8_sky72"]
 [ext_resource type="Script" uid="uid://dkhkwq486o6wc" path="res://move.gd" id="9_0ytqx"]
@@ -75,7 +75,6 @@ icon_alignment = 1
 
 [node name="Menu" type="Control" parent="."]
 unique_name_in_owner = true
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -221,7 +220,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 selected = 0
 item_count = 2
-popup/item_0/text = "Numbers"
+popup/item_0/text = "Num"
 popup/item_0/id = 0
 popup/item_1/text = "RGB"
 popup/item_1/id = 1
@@ -251,7 +250,24 @@ popup/item_2/text = "Hard"
 popup/item_2/id = 2
 popup/item_3/text = "Extreme"
 popup/item_3/id = 3
-script = ExtResource("6_g31lc")
+
+[node name="Language" type="HBoxContainer" parent="Menu/Center/Lines"]
+unique_name_in_owner = true
+layout_mode = 2
+script = ExtResource("7_knq72")
+
+[node name="Label" type="Label" parent="Menu/Center/Lines/Language"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Language"
+vertical_alignment = 1
+
+[node name="OptionButton" type="OptionButton" parent="Menu/Center/Lines/Language"]
+custom_minimum_size = Vector2(0, 35)
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+selected = 3
 
 [node name="Separator" type="Control" parent="Menu/Center/Lines"]
 custom_minimum_size = Vector2(0, 35)

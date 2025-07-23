@@ -1,0 +1,122 @@
+[
+	{
+	  "name": "pi",
+	  "value": "3.1415926536",
+	  "desc": "Das Verhältnis des Umfangs eines Kreises zu seinem Durchmesser, eine grundlegende mathematische Konstante, die in Geometrie, Trigonometrie und vielen anderen Bereichen vorkommt."
+	},
+	{
+	  "name": "tau",
+	  "value": "6.2831853072",
+	  "desc": "Die Tau-Konstante, gleich 2 mal Pi (2π), wird oft in kreisbezogenen Berechnungen verwendet und von einigen als natürlicher als Pi angesehen."
+	},
+	{
+	  "name": "e",
+	  "value": "2.7182818285",
+	  "desc": "Eulersche Zahl, die Basis des natürlichen Logarithmus, entscheidend für exponentielles Wachstum, Differentialgleichungen und komplexe Analyse."
+	},
+	{
+	  "name": "phi",
+	  "value": "1.6180339887",
+	  "desc": "Der Goldene Schnitt, eine besondere Zahl, die häufig in Kunst, Architektur und Natur vorkommt und mit ästhetisch ansprechenden Proportionen verbunden ist."
+	},
+	{
+	  "name": "sqrt2",
+	  "value": "1.4142135624",
+	  "desc": "Quadratwurzel aus 2, eine der ersten bekannten irrationalen Zahlen, die häufig im Satz des Pythagoras auftaucht."
+	},
+	{
+	  "name": "sqrt3",
+	  "value": "1.7320508076",
+	  "desc": "Quadratwurzel aus 3, häufig in geometrischen Berechnungen vorkommend, wie zum Beispiel in der Höhe eines gleichseitigen Dreiecks."
+	},
+	{
+	  "name": "ln2",
+	  "value": "0.6931471806",
+	  "desc": "Natürlicher Logarithmus von 2, häufig in exponentiellen und logarithmischen Berechnungen verwendet."
+	},
+	{
+	  "name": "ln10",
+	  "value": "2.3025850930",
+	  "desc": "Natürlicher Logarithmus von 10, verbindet den Logarithmus zur Basis 10 mit dem natürlichen Logarithmus."
+	},
+	{
+	  "name": "gamma",
+	  "value": "0.5772156649",
+	  "desc": "Euler–Mascheroni-Konstante, wichtig in der Zahlentheorie und Analyse, insbesondere bei Problemen im Zusammenhang mit der Verteilung von Primzahlen."
+	},
+	{
+	  "name": "c",
+	  "value": "299792458",
+	  "desc": "Die Lichtgeschwindigkeit im Vakuum in Metern pro Sekunde, eine fundamentale physikalische Konstante, die zentral für die Relativitätstheorie ist."
+	},
+	{
+	  "name": "h",
+	  "value": "6.62607015e-34",
+	  "desc": "Plancksches Wirkungsquantum, grundlegend in der Quantenmechanik, das Energie und Frequenz miteinander verbindet."
+	},
+	{
+	  "name": "ħ",
+	  "value": "1.054571817e-34",
+	  "desc": "Reduziertes Plancksches Wirkungsquantum (Dirac-Konstante), gleich dem Planckschen Wirkungsquantum geteilt durch 2π, wichtig in den Formeln der Quantenmechanik."
+	},
+	{
+	  "name": "G",
+	  "value": "6.67430e-11",
+	  "desc": "Gravitationskonstante, die die Stärke der Gravitationskraft zwischen Massen im Newtonschen Gesetz der universellen Gravitation bestimmt."
+	},
+	{
+	  "name": "k",
+	  "value": "1.380649e-23",
+	  "desc": "Boltzmann-Konstante, die Temperatur und Energie in der statistischen Physik miteinander verbindet."
+	},
+	{
+	  "name": "Na",
+	  "value": "6.02214076e+23",
+	  "desc": "Avogadro-Konstante, die Anzahl der Teilchen (normalerweise Atome oder Moleküle) in einem Mol einer Substanz."
+	},
+	{
+	  "name": "qe",
+	  "value": "1.602176634e-19",
+	  "desc": "Elementarladung, die Größe der elektrischen Ladung, die ein Proton oder Elektron trägt, fundamental für die Elektromagnetismus."
+	},
+	{
+	  "name": "me",
+	  "value": "9.10938356e-31",
+	  "desc": "Die Masse des Elektrons in Kilogramm, fundamentale Partikelmasse."
+	},
+	{
+	  "name": "mp",
+	  "value": "1.6726219e-27",
+	  "desc": "Protonenmasse in Kilogramm, Bestandteil der Atomkerne."
+	},
+	{
+	  "name": "μ0",
+	  "value": "1.25663706212e-6",
+	  "desc": "Vakuumpermeabilität (magnetische Konstante), definiert die magnetischen Eigenschaften des Vakuums."
+	},
+	{
+	  "name": "ε0",
+	  "value": "8.854187817e-12",
+	  "desc": "Vakuumpermittivität (elektrische Konstante), beschreibt die elektrischen Eigenschaften des Vakuums."
+	},
+	{
+	  "name": "σ",
+	  "value": "5.670374419e-8",
+	  "desc": "Stefan-Boltzmann-Konstante, die die gesamte Energie pro Flächeneinheit eines schwarzen Körpers mit der vierten Potenz seiner Temperatur in Verbindung bringt."
+	},
+	{
+	  "name": "R",
+	  "value": "8.314462618",
+	  "desc": "Ideale Gaskonstante, verbindet Druck, Volumen und Temperatur eines idealen Gases."
+	},
+	{
+	  "name": "g",
+	  "value": "9.80665",
+	  "desc": "Standardbeschleunigung aufgrund der Schwerkraft an der Erdoberfläche in Metern pro Sekunde Quadrat."
+	},
+	{
+	  "name": "alpha",
+	  "value": "0.0072973526",
+	  "desc": "Feinstrukturkonstante, eine dimensionslose Konstante, die die Stärke der elektromagnetischen Wechselwirkung charakterisiert."
+	}
+]

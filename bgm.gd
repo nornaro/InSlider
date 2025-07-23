@@ -19,7 +19,7 @@ func _ready() -> void:
 func find_mp3_in_known_paths() -> String:
 	var paths := ["./BGM/", "res://BGM/", "user://BGM/"]
 
-	for path in paths:
+	for path:String in paths:
 		if not DirAccess.dir_exists_absolute(path):
 			continue
 		var files := DirAccess.get_files_at(path)

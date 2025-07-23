@@ -8,34 +8,6 @@ var dragging: bool = false
 var drag_start: Vector2 = Vector2.ZERO
 var deadzone: float = 10.0
 
-var constants: Array[Dictionary] = [
-	# (változatlanul meghagyva a konstansokat)
-	{"name": "pi", "value": "3.1415926536", "desc": "The ratio of a circle's circumference to its diameter, a fundamental mathematical constant appearing in geometry, trigonometry, and many other fields."},
-	{"name": "tau", "value": "6.2831853072", "desc": "Tau constant, equal to 2 times pi (2π), often used in circle-related calculations and considered by some to be more natural than pi."},
-	{"name": "e", "value": "2.7182818285", "desc": "Euler's number, the base of the natural logarithm, crucial in exponential growth, differential equations, and complex analysis."},
-	{"name": "phi", "value": "1.6180339887", "desc": "The golden ratio, a special number often found in art, architecture, and nature, associated with aesthetically pleasing proportions."},
-	{"name": "sqrt2", "value": "1.4142135624", "desc": "Square root of 2, one of the first known irrational numbers, frequently appearing in the Pythagorean theorem."},
-	{"name": "sqrt3", "value": "1.7320508076", "desc": "Square root of 3, commonly encountered in geometric calculations, such as the height of an equilateral triangle."},
-	{"name": "ln2", "value": "0.6931471806", "desc": "Natural logarithm of 2, often used in exponential and logarithmic calculations."},
-	{"name": "ln10", "value": "2.3025850930", "desc": "Natural logarithm of 10, connecting the base-10 logarithm to the natural logarithm."},
-	{"name": "gamma", "value": "0.5772156649", "desc": "Euler–Mascheroni constant, significant in number theory and analysis, especially in problems related to prime number distribution."},
-	{"name": "c", "value": "299792458", "desc": "Speed of light in vacuum in meters per second, a fundamental physical constant central to relativity theory."},
-	{"name": "h", "value": "6.62607015e-34", "desc": "Planck constant, foundational in quantum mechanics, relating energy and frequency."},
-	{"name": "ħ", "value": "1.054571817e-34", "desc": "Reduced Planck constant (Dirac constant), equal to Planck constant divided by 2π, important in quantum mechanics formulas."},
-	{"name": "G", "value": "6.67430e-11", "desc": "Gravitational constant, determining the strength of gravitational force between masses in Newton's law of universal gravitation."},
-	{"name": "k", "value": "1.380649e-23", "desc": "Boltzmann constant, linking temperature and energy in statistical physics."},
-	{"name": "Na", "value": "6.02214076e+23", "desc": "Avogadro's number, the number of constituent particles (usually atoms or molecules) in one mole of substance."},
-	{"name": "qe", "value": "1.602176634e-19", "desc": "Elementary charge, the magnitude of electric charge carried by a proton or electron, fundamental to electromagnetism."},
-	{"name": "me", "value": "9.10938356e-31", "desc": "Electron mass in kilograms, fundamental particle mass."},
-	{"name": "mp", "value": "1.6726219e-27", "desc": "Proton mass in kilograms, constituent of atomic nuclei."},
-	{"name": "μ0", "value": "1.25663706212e-6", "desc": "Vacuum permeability (magnetic constant), defines the magnetic properties of vacuum."},
-	{"name": "ε0", "value": "8.854187817e-12", "desc": "Vacuum permittivity (electric constant), characterizes the electric properties of vacuum."},
-	{"name": "σ", "value": "5.670374419e-8", "desc": "Stefan–Boltzmann constant, relates the total energy radiated per unit surface area of a black body to the fourth power of its temperature."},
-	{"name": "R", "value": "8.314462618", "desc": "Ideal gas constant, relates pressure, volume, and temperature of an ideal gas."},
-	{"name": "g", "value": "9.80665", "desc": "Standard acceleration due to gravity on Earth's surface in meters per second squared."},
-	{"name": "alpha", "value": "0.0072973526", "desc": "Fine-structure constant, a dimensionless constant characterizing the strength of electromagnetic interaction."}
-]
-
 func _ready() -> void:
 	start()
 
@@ -119,7 +91,7 @@ func hard(count: int) -> void:
 		btn.size_flags_vertical = Control.SIZE_EXPAND_FILL
 
 func extreme(count: int) -> void:
-	var selected: Array = constants.slice(0, min(count, constants.size()))
+	var selected: Array = Global.lang[Global.local].slice(0, min(count, Global.lang[Global.local].size()))
 	for c:Dictionary in selected:
 		var btn: Button = Button.new()
 		add_child(btn)
@@ -232,11 +204,18 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("mute"):
 		%Volume.mute()
 		return
-	if not (event.is_action_pressed("ui_left") or event.is_action_pressed("ui_right") or event.is_action_pressed("ui_up") or event.is_action_pressed("ui_down")):
+	if not (
+		event.is_action_pressed("ui_left") or 
+		event.is_action_pressed("ui_right") or 
+		event.is_action_pressed("ui_up") or 
+		event.is_action_pressed("ui_down")):
 		return
 	move_it(event.as_text())
 
 func _input(event: InputEvent) -> void:
+	if event is InputEventScreenTouch and event.is_double_tap():
+		%Menu.visible = !%Menu.visible
+		return
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		dragging = event.pressed
 		if dragging:
