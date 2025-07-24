@@ -4,7 +4,7 @@
 // Incrementing CACHE_VERSION will kick off the install event and force
 // previously cached resources to be updated from the network.
 /** @type {string} */
-const CACHE_VERSION = '1753302412|70578792351';
+const CACHE_VERSION = '1753371362|54272539867';
 /** @type {string} */
 const CACHE_PREFIX = 'InSlider-sw-cache-';
 const CACHE_NAME = CACHE_PREFIX + CACHE_VERSION;

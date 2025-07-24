@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://jk8kplo0jien"]
+[gd_scene load_steps=24 format=3 uid="uid://jk8kplo0jien"]
 
 [ext_resource type="Script" uid="uid://dryk81ij7ufr8" path="res://grid_container.gd" id="1_0fbet"]
 [ext_resource type="Script" uid="uid://csq85rr7lju30" path="res://menu.gd" id="2_62e2m"]
@@ -15,6 +15,7 @@
 [ext_resource type="AudioStream" uid="uid://dq8u4et7uv5l7" path="res://swoosh.mp3" id="8_sky72"]
 [ext_resource type="Script" uid="uid://dkhkwq486o6wc" path="res://move.gd" id="9_0ytqx"]
 [ext_resource type="Script" uid="uid://b1ijrue340lg1" path="res://warning.gd" id="9_eh0v1"]
+[ext_resource type="Script" uid="uid://jjb6fn4wm88q" path="res://2do.gd" id="16_xvdhi"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iy58a"]
 
@@ -32,6 +33,17 @@ corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
+
+[sub_resource type="Theme" id="Theme_knq72"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pi4e7"]
+bg_color = Color(0.113725, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oq4si"]
+bg_color = Color(0.677376, 0.605125, 0.0999637, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m4egf"]
+bg_color = Color(1, 0.236443, 0.674463, 1)
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -71,6 +83,7 @@ custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_g31lc")
 text = "1"
+clip_text = true
 icon_alignment = 1
 
 [node name="Menu" type="Control" parent="."]
@@ -107,6 +120,15 @@ theme_override_constants/margin_bottom = 150
 [node name="Lines" type="VBoxContainer" parent="Menu/Center"]
 layout_mode = 2
 
+[node name="Tutorial" type="HBoxContainer" parent="Menu/Center/Lines"]
+unique_name_in_owner = true
+layout_mode = 2
+alignment = 1
+
+[node name="Button" type="Button" parent="Menu/Center/Lines/Tutorial"]
+layout_mode = 2
+text = "Start Tutorial"
+
 [node name="Color" type="HBoxContainer" parent="Menu/Center/Lines"]
 layout_mode = 2
 
@@ -130,6 +152,7 @@ layout_mode = 2
 [node name="Label" type="Label" parent="Menu/Center/Lines/Size"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 0
 text = "Size"
 vertical_alignment = 1
 
@@ -138,7 +161,8 @@ custom_minimum_size = Vector2(35, 35)
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Grid size will be size*size"
-placeholder_text = "1"
+text = "2"
+placeholder_text = "2"
 
 [node name="Volume" type="HBoxContainer" parent="Menu/Center/Lines"]
 unique_name_in_owner = true
@@ -203,6 +227,8 @@ size_flags_horizontal = 3
 [node name="BGM" type="AudioStreamPlayer" parent="Menu/Center/Lines/BGM"]
 unique_name_in_owner = true
 stream = ExtResource("6_knq72")
+autoplay = true
+parameters/looping = false
 
 [node name="Type" type="HBoxContainer" parent="Menu/Center/Lines"]
 unique_name_in_owner = true
@@ -211,6 +237,7 @@ layout_mode = 2
 [node name="Label" type="Label" parent="Menu/Center/Lines/Type"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme = SubResource("Theme_knq72")
 text = "Type"
 vertical_alignment = 1
 
@@ -267,7 +294,6 @@ custom_minimum_size = Vector2(0, 35)
 layout_mode = 2
 size_flags_horizontal = 3
 alignment = 1
-selected = 3
 
 [node name="Separator" type="Control" parent="Menu/Center/Lines"]
 custom_minimum_size = Vector2(0, 35)
@@ -350,17 +376,28 @@ custom_minimum_size = Vector2(0, 70)
 layout_mode = 2
 text = "I Acknowledge"
 
-[node name="ColorPicker" type="ColorPicker" parent="."]
+[node name="ColorPicker" type="Panel" parent="."]
 unique_name_in_owner = true
 visible = false
+custom_minimum_size = Vector2(0, 600)
 layout_mode = 2
 offset_left = 372.0
-offset_top = 50.0
-offset_right = 670.0
-offset_bottom = 622.0
+offset_top = 30.0
+offset_right = 672.0
+offset_bottom = 640.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_pi4e7")
+
+[node name="ColorPicker" type="ColorPicker" parent="ColorPicker"]
+layout_mode = 2
+offset_right = 298.0
+offset_bottom = 607.0
+theme_override_styles/tab_unselected = SubResource("StyleBoxFlat_oq4si")
+theme_override_styles/tab_selected = SubResource("StyleBoxFlat_m4egf")
 script = ExtResource("7_iy58a")
 
-[node name="Button" type="Button" parent="ColorPicker"]
+[node name="Button" type="Button" parent="ColorPicker/ColorPicker"]
 layout_mode = 2
 text = "OK"
 script = ExtResource("3_fj5cn")
@@ -371,9 +408,13 @@ stream = ExtResource("8_sky72")
 volume_db = -25.0
 script = ExtResource("9_0ytqx")
 
+[node name="2DO" type="Node" parent="."]
+script = ExtResource("16_xvdhi")
+
 [connection signal="pressed" from="Menu/Center/Lines/Color/Button" to="Menu/Center/Lines/Color/Button" method="_on_pressed"]
 [connection signal="toggled" from="Menu/Center/Lines/Volume/HBoxContainer/Unlock" to="Menu/Center/Lines/Volume" method="_on_unlock_toggled"]
 [connection signal="changed" from="Menu/Center/Lines/Volume/HSlider" to="Menu/Center/Lines/Volume" method="_on_h_slider_changed"]
+[connection signal="value_changed" from="Menu/Center/Lines/Volume/HSlider" to="Menu/Center/Lines/Volume" method="_on_h_slider_value_changed"]
 [connection signal="text_changed" from="Menu/Center/Lines/Volume/TextEdit" to="Menu/Center/Lines/Volume" method="_on_text_edit_text_changed"]
 [connection signal="item_selected" from="Menu/Center/Lines/BGM/OptionButton" to="Menu/Center/Lines/BGM" method="_on_option_button_item_selected"]
 [connection signal="pressed" from="Menu/Center/Lines/Controls/Cancel" to="Menu/Center/Lines/Controls/Cancel" method="_on_pressed"]
@@ -381,5 +422,5 @@ script = ExtResource("9_0ytqx")
 [connection signal="pressed" from="Menu/Center/Lines/Controls/Save" to="Menu/Center/Lines/Controls/Save" method="_on_pressed"]
 [connection signal="pressed" from="Menu/Center/Lines/Controls/Ok" to="Menu/Center/Lines/Controls/Ok" method="_on_pressed"]
 [connection signal="pressed" from="Menu/Warning/HBoxContainer/Button" to="Menu/Warning" method="_on_button_pressed"]
-[connection signal="color_changed" from="ColorPicker" to="ColorPicker" method="_on_color_changed"]
-[connection signal="pressed" from="ColorPicker/Button" to="ColorPicker/Button" method="_on_pressed"]
+[connection signal="color_changed" from="ColorPicker/ColorPicker" to="ColorPicker/ColorPicker" method="_on_color_changed"]
+[connection signal="pressed" from="ColorPicker/ColorPicker/Button" to="ColorPicker/ColorPicker/Button" method="_on_pressed"]

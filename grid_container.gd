@@ -32,7 +32,7 @@ func start() -> void:
 				count = Global.size * Global.size - 1
 				extreme(count)
 	if type_button.selected == 1:
-		var max_size: int = 16 if Global.difficulty <= 1 else 256
+		var max_size: int = 16
 
 		Global.size = clamp(Global.size, 1, max_size)
 		columns = Global.size
@@ -62,84 +62,68 @@ func add_menu() -> void:
 	menu.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	menu_index = menu.get_index()
 
+func _create_btn(text := "", tooltip := "", name := "", color := Color(1, 1, 1), stylebox := false) -> void:
+	var btn := Button.new()
+	btn.set("theme_override_font_sizes/font_size", 100/sqrt(Global.size*2))
+	add_child(btn)
+	btn.text = text
+	btn.tooltip_text = tooltip
+	btn.name = name
+	btn.modulate = color
+	btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	btn.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	if stylebox:
+		btn.add_theme_stylebox_override("normal", StyleBoxFlat.new())
+
 func demo(count: int) -> void:
-	for i in range(count):
-		var btn: Button = Button.new()
-		add_child(btn)
-		btn.text = str(i + 1)
-		btn.name = btn.text
-		btn.modulate = Color(1, 1, 1)
-		btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		btn.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	for i in count:
+		var label := str(i + 1)
+		_create_btn(label, "", label)
 
 func hard(count: int) -> void:
 	var values: Array[float] = []
 	while values.size() < count:
-		var num: float = snapped(randf_range(0.1, 9999.9), 0.01)
-		var str_num: String = str(num).rstrip("0").rstrip(".")
-		if str_num.length() <= 4:
-			values.append(num)
+		var num:float = snapped(randf_range(0.1, 9999.9), 0.01)
+		var str_num := str(num).rstrip("0").rstrip(".")
+		if str_num.length() > 4:
+			continue
+		values.append(num)
 	values.sort()
 	for num in values:
-		var btn: Button = Button.new()
-		add_child(btn)
-		var label: String = str(num).rstrip("0").rstrip(".")
-		btn.text = label
-		btn.name = label
-		btn.modulate = Color(1, 1, 1)
-		btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		btn.size_flags_vertical = Control.SIZE_EXPAND_FILL
+		var label := str(num).rstrip("0").rstrip(".")
+		_create_btn(label, "", label)
 
 func extreme(count: int) -> void:
-	var selected: Array = Global.lang[Global.local].slice(0, min(count, Global.lang[Global.local].size()))
-	for c:Dictionary in selected:
-		var btn: Button = Button.new()
-		add_child(btn)
-		btn.text = c["name"]
-		btn.name = c["name"]
-		btn.tooltip_text = "%s\n%s\n%s" % [c["name"], c["value"], c["desc"]]
-		btn.modulate = Color(1, 1, 1)
-		btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		btn.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	var lang:Array = Global.lang[Global.local]
+	var selected := lang.slice(0, min(count, lang.size()))
+	for c: Dictionary in selected:
+		var name:String = c["name"]
+		var tooltip := "%s\n%s\n%s" % [name, c["value"], c["desc"]]
+		_create_btn(name, tooltip, name)
 
 func demo_colors(count: int) -> void:
-	var colors: Array[Color] = _generate_demo_colors(count)
-	for i in range(count):
-		var btn: Button = Button.new()
-		add_child(btn)
-		btn.add_theme_stylebox_override("normal", StyleBoxFlat.new())
-		btn.text = ""
-		btn.tooltip_text = str(colors[i].linear_to_srgb())
-		btn.name = str(colors[i].r+colors[i].b+colors[i].g)
-		btn.modulate = colors[i]
-		btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		btn.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	var colors := _generate_demo_colors(count)
+	for i in count:
+		var color := colors[i]
+		var tooltip := str(color.linear_to_srgb())
+		var name := str(color.r + color.g + color.b)
+		_create_btn("", tooltip, name, color, true)
 
 func hard_colors(count: int) -> void:
-	var colors: Array[Color] = _generate_hard_colors(count)
-	for i in range(count):
-		var btn: Button = Button.new()
-		add_child(btn)
-		btn.add_theme_stylebox_override("normal", StyleBoxFlat.new())
-		btn.text = ""
-		btn.tooltip_text = str(colors[i])
-		btn.name = str(colors[i].r+colors[i].b+colors[i].g)
-		btn.modulate = colors[i]
-		btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		btn.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	var colors := _generate_hard_colors(count)
+	for i in count:
+		var color := colors[i]
+		var tooltip := str(color)
+		var name := str(color.r + color.g + color.b)
+		_create_btn("", tooltip, name, color, true)
 
 func extreme_colors(count: int) -> void:
-	var colors: Array[Color] = _generate_extreme_colors(count)
-	for i in range(count):
-		var btn: Button = Button.new()
-		add_child(btn)
-		btn.add_theme_stylebox_override("normal", StyleBoxFlat.new())
-		btn.text = ""
-		btn.tooltip_text = str(colors[i])
-		btn.name = str(colors[i].r+colors[i].b+colors[i].g)
-		btn.modulate = colors[i]
-		btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		btn.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	var colors := _generate_extreme_colors(count)
+	for i in count:
+		var color := colors[i]
+		var tooltip := str(color)
+		var name := str(color.r + color.g + color.b)
+		_create_btn("", tooltip, name, color, true)
 
 func _generate_demo_colors(count: int) -> Array[Color]:
 	var c:Color
