@@ -14,7 +14,7 @@ config/name="InSlider"
 run/main_scene="uid://jk8kplo0jien"
 config/use_custom_user_dir=true
 config/features=PackedStringArray("4.4", "Forward Plus")
-config/icon="uid://dv3cadap4w38x"
+config/icon="uid://dqfidnn4bcq5a"
 
 [autoload]
 
