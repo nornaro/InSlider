@@ -16,7 +16,7 @@ func _ready():
 	playback = get_stream_playback()
 	set_process(true)
 
-func _process(_delta):
+func _physics_process(delta: float) -> void:
 	var to_fill = playback.get_frames_available()
 	while to_fill > 0:
 		var sample = sin(phase)

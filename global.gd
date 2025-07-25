@@ -9,7 +9,7 @@ var bgm:String = ""
 var vol:float
 var lang:Dictionary
 var local:String = "en"
-
+var warnings_accepted:Dictionary = {"Volume":-1}
 
 func _ready() -> void:
 	for l:String in DirAccess.get_files_at("res://lang/"):

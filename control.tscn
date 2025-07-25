@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://jk8kplo0jien"]
+[gd_scene load_steps=34 format=3 uid="uid://jk8kplo0jien"]
 
 [ext_resource type="Script" uid="uid://dryk81ij7ufr8" path="res://grid_container.gd" id="1_0fbet"]
 [ext_resource type="Script" uid="uid://csq85rr7lju30" path="res://menu.gd" id="2_62e2m"]
@@ -8,7 +8,6 @@
 [ext_resource type="Script" uid="uid://blxub02b8hwat" path="res://volume.gd" id="4_pxugv"]
 [ext_resource type="Script" uid="uid://b8xwnf5l7facf" path="res://bgm.gd" id="5_am1vj"]
 [ext_resource type="Script" uid="uid://bdchh7243dshj" path="res://ok.gd" id="5_kbped"]
-[ext_resource type="AudioStream" uid="uid://v34irx2edvtg" path="res://BGM/Acoustic Guitar.mp3" id="6_knq72"]
 [ext_resource type="Script" uid="uid://bs6s3t81fsnv3" path="res://color_picker.gd" id="7_iy58a"]
 [ext_resource type="Script" uid="uid://bb0nabvk2lkhl" path="res://language.gd" id="7_knq72"]
 [ext_resource type="Texture2D" uid="uid://bb4aqbb78agtq" path="res://audiowarning.png" id="8_eh0v1"]
@@ -34,6 +33,10 @@ corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_knq72"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xvdhi"]
+
 [sub_resource type="Theme" id="Theme_knq72"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pi4e7"]
@@ -44,6 +47,99 @@ bg_color = Color(0.677376, 0.605125, 0.0999637, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m4egf"]
 bg_color = Color(1, 0.236443, 0.674463, 1)
+
+[sub_resource type="Gradient" id="Gradient_xvdhi"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.25, 0.75, 1)
+colors = PackedColorArray(1, 1, 1, 0.392157, 0, 0, 0, 0.392157, 0, 0, 0, 0.392157, 1, 1, 1, 0.392157)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_oq4si"]
+gradient = SubResource("Gradient_xvdhi")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_m4egf"]
+texture = SubResource("GradientTexture1D_oq4si")
+texture_margin_left = 10.0
+texture_margin_top = 10.0
+texture_margin_right = 10.0
+texture_margin_bottom = 10.0
+
+[sub_resource type="Animation" id="Animation_xvdhi"]
+resource_name = "Fade"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("%Tutorial_text:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_oq4si"]
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("%Tutorial_text:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_m4egf"]
+markers = [{
+"color": Color(1, 1, 1, 1),
+"name": &"0",
+"time": 0.0
+}, {
+"color": Color(1, 1, 1, 1),
+"name": &"5",
+"time": 5.0
+}]
+
+[sub_resource type="Animation" id="Animation_pi4e7"]
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("%Tutorial_text:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_kuuv8"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("%Tutorial_text:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_pi4e7"]
+_data = {
+&"Fade": SubResource("Animation_pi4e7"),
+&"Fade_in": SubResource("Animation_xvdhi"),
+&"Fade_keep": SubResource("Animation_m4egf"),
+&"Fade_out": SubResource("Animation_oq4si"),
+&"RESET": SubResource("Animation_kuuv8")
+}
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -113,9 +209,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 150
-theme_override_constants/margin_top = 150
+theme_override_constants/margin_top = 100
 theme_override_constants/margin_right = 150
-theme_override_constants/margin_bottom = 150
+theme_override_constants/margin_bottom = 100
 
 [node name="Lines" type="VBoxContainer" parent="Menu/Center"]
 layout_mode = 2
@@ -143,6 +239,8 @@ vertical_alignment = 1
 custom_minimum_size = Vector2(35, 35)
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_styles/focus = SubResource("StyleBoxFlat_knq72")
+theme_override_styles/normal = SubResource("StyleBoxFlat_xvdhi")
 script = ExtResource("3_fj5cn")
 
 [node name="Size" type="HBoxContainer" parent="Menu/Center/Lines"]
@@ -177,10 +275,13 @@ size_flags_horizontal = 3
 [node name="Label" type="Label" parent="Menu/Center/Lines/Volume/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+tooltip_text = "Can be changed using +/-"
+mouse_filter = 1
 text = "Volume"
 vertical_alignment = 1
 
 [node name="Unlock" type="CheckButton" parent="Menu/Center/Lines/Volume/HBoxContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 35)
 layout_mode = 2
 tooltip_text = "WARNING!!
@@ -192,15 +293,20 @@ text = "Unlock"
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
-value = 10.0
-rounded = true
+tooltip_text = "Can be changed using +/-"
+step = 0.01
+value = 1.0
 
 [node name="TextEdit" type="TextEdit" parent="Menu/Center/Lines/Volume"]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 3
+tooltip_text = "Can be changed using +/-"
+text = "1.0"
+placeholder_text = "1.0"
 
 [node name="BGM" type="HBoxContainer" parent="Menu/Center/Lines"]
+unique_name_in_owner = true
 layout_mode = 2
 script = ExtResource("5_am1vj")
 
@@ -224,11 +330,10 @@ custom_minimum_size = Vector2(0, 35)
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="BGM" type="AudioStreamPlayer" parent="Menu/Center/Lines/BGM"]
+[node name="BGM_player" type="AudioStreamPlayer" parent="Menu/Center/Lines/BGM"]
 unique_name_in_owner = true
-stream = ExtResource("6_knq72")
+volume_db = -20.0
 autoplay = true
-parameters/looping = false
 
 [node name="Type" type="HBoxContainer" parent="Menu/Center/Lines"]
 unique_name_in_owner = true
@@ -300,6 +405,11 @@ custom_minimum_size = Vector2(0, 35)
 layout_mode = 2
 size_flags_vertical = 3
 
+[node name="Separator3" type="Control" parent="Menu/Center/Lines"]
+custom_minimum_size = Vector2(0, 35)
+layout_mode = 2
+size_flags_vertical = 3
+
 [node name="Controls" type="HBoxContainer" parent="Menu/Center/Lines"]
 custom_minimum_size = Vector2(0, 35)
 layout_mode = 2
@@ -337,10 +447,24 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="Ok" type="Button" parent="Menu/Center/Lines/Controls"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(60, 35)
 layout_mode = 2
 text = "Ok"
 script = ExtResource("5_kbped")
+
+[node name="Separator2" type="Control" parent="Menu/Center/Lines"]
+custom_minimum_size = Vector2(0, 35)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="Menu/Center/Lines"]
+self_modulate = Color(0.319255, 0.319255, 0.319255, 1)
+layout_mode = 2
+text = "You can always open Settings by pressing 
+ESC or double tap"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Warning" type="TextureRect" parent="Menu"]
 visible = false
@@ -365,16 +489,42 @@ offset_top = -8.0
 grow_horizontal = 2
 grow_vertical = 0
 
+[node name="Decline" type="Button" parent="Menu/Warning/HBoxContainer"]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+text = "Decline"
+
+[node name="Separator2" type="Control" parent="Menu/Warning/HBoxContainer"]
+custom_minimum_size = Vector2(15, 35)
+layout_mode = 2
+size_flags_vertical = 3
+
 [node name="LineEdit" type="LineEdit" parent="Menu/Warning/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "Write YES to acknowledge and press button"
 alignment = 1
 
-[node name="Button" type="Button" parent="Menu/Warning/HBoxContainer"]
+[node name="Separator3" type="Control" parent="Menu/Warning/HBoxContainer"]
+custom_minimum_size = Vector2(15, 35)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Accept" type="Button" parent="Menu/Warning/HBoxContainer"]
 custom_minimum_size = Vector2(0, 70)
 layout_mode = 2
 text = "I Acknowledge"
+
+[node name="Label" type="Label" parent="Menu/Warning"]
+self_modulate = Color(0.588235, 0.588235, 0.588235, 1)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 23.0
+grow_horizontal = 2
+text = "This warning won't show again, unless you toggle volume unlock slider to true "
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="ColorPicker" type="Panel" parent="."]
 unique_name_in_owner = true
@@ -411,16 +561,63 @@ script = ExtResource("9_0ytqx")
 [node name="2DO" type="Node" parent="."]
 script = ExtResource("16_xvdhi")
 
+[node name="Tutorial_overlay" type="MarginContainer" parent="."]
+visible = false
+top_level = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_top = 200
+theme_override_constants/margin_right = 100
+theme_override_constants/margin_bottom = 100
+
+[node name="Control" type="Control" parent="Tutorial_overlay"]
+layout_mode = 2
+
+[node name="Tutorial_text" type="Label" parent="Tutorial_overlay/Control"]
+unique_name_in_owner = true
+layout_mode = 2
+anchor_right = 1.0
+offset_bottom = 23.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 36
+theme_override_styles/normal = SubResource("StyleBoxTexture_m4egf")
+text = "Tutorial"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Tutorial_fade" type="AnimationPlayer" parent="Tutorial_overlay"]
+unique_name_in_owner = true
+callback_mode_process = 0
+libraries = {
+&"": SubResource("AnimationLibrary_pi4e7")
+}
+
+[node name="Tutorial_timer" type="Timer" parent="Tutorial_overlay"]
+unique_name_in_owner = true
+wait_time = 3.0
+
+[connection signal="pressed" from="Menu/Center/Lines/Tutorial/Button" to="Field" method="_on_button_pressed"]
 [connection signal="pressed" from="Menu/Center/Lines/Color/Button" to="Menu/Center/Lines/Color/Button" method="_on_pressed"]
 [connection signal="toggled" from="Menu/Center/Lines/Volume/HBoxContainer/Unlock" to="Menu/Center/Lines/Volume" method="_on_unlock_toggled"]
 [connection signal="changed" from="Menu/Center/Lines/Volume/HSlider" to="Menu/Center/Lines/Volume" method="_on_h_slider_changed"]
 [connection signal="value_changed" from="Menu/Center/Lines/Volume/HSlider" to="Menu/Center/Lines/Volume" method="_on_h_slider_value_changed"]
 [connection signal="text_changed" from="Menu/Center/Lines/Volume/TextEdit" to="Menu/Center/Lines/Volume" method="_on_text_edit_text_changed"]
+[connection signal="toggled" from="Menu/Center/Lines/BGM/HBoxContainer/Loop" to="Menu/Center/Lines/BGM" method="_on_loop_toggled"]
 [connection signal="item_selected" from="Menu/Center/Lines/BGM/OptionButton" to="Menu/Center/Lines/BGM" method="_on_option_button_item_selected"]
+[connection signal="finished" from="Menu/Center/Lines/BGM/BGM_player" to="Menu/Center/Lines/BGM" method="_on_bgm_finished"]
 [connection signal="pressed" from="Menu/Center/Lines/Controls/Cancel" to="Menu/Center/Lines/Controls/Cancel" method="_on_pressed"]
 [connection signal="pressed" from="Menu/Center/Lines/Controls/Reset" to="Menu/Center/Lines/Controls/Reset" method="_on_pressed"]
 [connection signal="pressed" from="Menu/Center/Lines/Controls/Save" to="Menu/Center/Lines/Controls/Save" method="_on_pressed"]
 [connection signal="pressed" from="Menu/Center/Lines/Controls/Ok" to="Menu/Center/Lines/Controls/Ok" method="_on_pressed"]
-[connection signal="pressed" from="Menu/Warning/HBoxContainer/Button" to="Menu/Warning" method="_on_button_pressed"]
+[connection signal="pressed" from="Menu/Warning/HBoxContainer/Decline" to="Menu/Warning" method="_on_decline_pressed"]
+[connection signal="pressed" from="Menu/Warning/HBoxContainer/Accept" to="Menu/Warning" method="_on_button_pressed"]
 [connection signal="color_changed" from="ColorPicker/ColorPicker" to="ColorPicker/ColorPicker" method="_on_color_changed"]
 [connection signal="pressed" from="ColorPicker/ColorPicker/Button" to="ColorPicker/ColorPicker/Button" method="_on_pressed"]

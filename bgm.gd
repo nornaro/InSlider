@@ -1,94 +1,78 @@
 extends Node
 
-@onready var bgm_player: AudioStreamPlayer = %BGM
 @onready var option_button: OptionButton = $OptionButton
+@onready var bgm_tress: Array = [
+	preload("res://BGM/Acoustic Guitar.tres"),
+	preload("res://BGM/Bubble Baby.tres"),
+	preload("res://BGM/Bubble Energy.tres"),
+	preload("res://BGM/Bubbles.tres"),
+	preload("res://BGM/Happy Pop.tres"),
+	preload("res://BGM/Sugar Rush Delight.tres")
+]
 
-# Store track dictionaries with "name" and "stream"
 var bgm_tracks: Array[Dictionary] = []
 var play_order: Array[int] = []
 var current_index: int = 0
-var is_manual_selection: bool = false
+var bgm_history:Array[int] = [0]
+var bgm_num:int = 0
 
 func _ready() -> void:
-	%BGM.volume_linear = 0.1
-	load_bgm_files(find_mp3_in_known_paths())
+	%BGM_player.volume_db = -20
+	load_bgm_files()
 	populate_option_button()
-	shuffle_play_order()
 	play_next()
 
-func find_mp3_in_known_paths() -> String:
-	var paths := ["./BGM/", "res://BGM/", "user://BGM/"]
+func load_bgm_files() -> void:
+	bgm_from_tres()
+	bgm_from_path(["./BGM/", "user://BGM/"])
 
+func bgm_from_tres() -> void:
+	for bgm_tres:Resource in bgm_tress:
+		bgm_tracks.append({
+			"name": bgm_tres.resource_path.get_file().split(".")[0],
+			"stream": bgm_tres
+		})
+
+func bgm_from_path(paths:Array[String]) -> void:
 	for path:String in paths:
-		if not DirAccess.dir_exists_absolute(path):
+		if !DirAccess.dir_exists_absolute(path):
 			continue
-		var files := DirAccess.get_files_at(path)
-		for file in files:
-			if file.to_lower().ends_with(".mp3"):
-				return path
-	return ""
-
-func load_bgm_files(path: String) -> void:
-	var dir: DirAccess = DirAccess.open(path)
-	if dir == null:
-		push_error("Failed to open BGM directory!")
-		return
-
-	dir.list_dir_begin()
-	var file_name: String = dir.get_next()
-	while file_name != "":
-		if file_name.ends_with(".mp3"):
-			var file_path: String = path + file_name
-			var stream: Resource = load(file_path)
-			if stream is AudioStream:
-				var base_name: String = file_name.replace(".mp3", "")
-				bgm_tracks.append({
-					"name": base_name,
-					"stream": stream
-				})
-		file_name = dir.get_next()
-	dir.list_dir_end()
+		for file_name in DirAccess.get_files_at(path):
+			if !file_name.ends_with(".mp3"):
+				continue
+			bgm_tracks.append({
+				"name": file_name.split(".")[0],
+				"stream": load(path + file_name) as AudioStream
+			})
 
 func populate_option_button() -> void:
 	option_button.clear()
 	for track in bgm_tracks:
 		option_button.add_item(track["name"])
 
-func shuffle_play_order() -> void:
-	play_order.clear()
-	for i in bgm_tracks.size():
-		play_order.append(i)
-	play_order.shuffle()
-	current_index = 0
-
-func play_next() -> void:
-	if bgm_tracks.is_empty():
-		return
-
-	var track_index: int = play_order[current_index]
-	play_track(track_index)
-	
-	if !$HBoxContainer/Loop:
-		current_index += 1
-	if current_index >= play_order.size():
-		shuffle_play_order()
+func play_next(nxt:int = bgm_num+1) -> void:
+	if nxt == bgm_history.size():
+		var track_index:int# = randi() % bgm_tracks.size()
+		while track_index == bgm_history[bgm_num]:
+			track_index = randi() % bgm_tracks.size()
+		bgm_history.append(track_index)
+	play_track(bgm_history[nxt])
+	bgm_num += 1
 
 func play_track(index: int) -> void:
 	if index < 0 or index >= bgm_tracks.size():
 		return
 
-	var track: Dictionary = bgm_tracks[index]
-	bgm_player.stream = track["stream"]
-	bgm_player.play()
-
-	# Update OptionButton without triggering signal callback
-	is_manual_selection = true
+	var track:Dictionary = bgm_tracks[index]
+	%BGM_player.stream = track["stream"]
+	%BGM_player.play()
 	option_button.select(index)
-	is_manual_selection = false
-
-func _on_BGM_finished() -> void:
-	play_next()
-
 
 func _on_option_button_item_selected(index: int) -> void:
 	play_track(index)
+
+func _on_loop_toggled(toggled_on: bool) -> void:
+	%BGM_player.set("parameters/looping",toggled_on)
+
+func _on_bgm_finished() -> void:
+	play_next()
