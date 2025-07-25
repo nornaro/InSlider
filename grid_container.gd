@@ -19,7 +19,7 @@ func start() -> void:
 	Global.size = clamp(Global.size, 1, 256)
 	columns = Global.size
 	var count: int = Global.size * Global.size - 1  # Menü gomb miatt -1
-	var type_button := $"../Menu/Center/Lines/Type/OptionButton"
+	var type_button:Button = %Type_select
 
 	min_color = 1.0/count
 	max_color = 1.0-min_color

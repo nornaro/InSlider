@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://jk8kplo0jien"]
+[gd_scene load_steps=39 format=3 uid="uid://jk8kplo0jien"]
 
 [ext_resource type="Script" uid="uid://dryk81ij7ufr8" path="res://grid_container.gd" id="1_0fbet"]
 [ext_resource type="Script" uid="uid://csq85rr7lju30" path="res://menu.gd" id="2_62e2m"]
@@ -11,9 +11,14 @@
 [ext_resource type="Script" uid="uid://bs6s3t81fsnv3" path="res://color_picker.gd" id="7_iy58a"]
 [ext_resource type="Script" uid="uid://bb0nabvk2lkhl" path="res://language.gd" id="7_knq72"]
 [ext_resource type="Texture2D" uid="uid://dh052icbaxbfn" path="res://audiowarning.png" id="8_eh0v1"]
+[ext_resource type="Script" uid="uid://ci5d6w4snh26b" path="res://login_button_a.gd" id="8_pi4e7"]
 [ext_resource type="AudioStream" uid="uid://cm2dtxutik7wr" path="res://swoosh.mp3" id="8_sky72"]
 [ext_resource type="Script" uid="uid://dkhkwq486o6wc" path="res://move.gd" id="9_0ytqx"]
 [ext_resource type="Script" uid="uid://b1ijrue340lg1" path="res://warning.gd" id="9_eh0v1"]
+[ext_resource type="Texture2D" uid="uid://ctl7i2ogseda6" path="res://Passw.png" id="10_m4egf"]
+[ext_resource type="Texture2D" uid="uid://cq4plkeegavkl" path="res://PWReset.png" id="11_pi4e7"]
+[ext_resource type="Script" uid="uid://bju0biasg0iae" path="res://login_button_b.gd" id="13_kuuv8"]
+[ext_resource type="Script" uid="uid://b87bmyar1m3ru" path="res://fire_base.gd" id="16_oq4si"]
 [ext_resource type="Script" uid="uid://jjb6fn4wm88q" path="res://2do.gd" id="16_xvdhi"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iy58a"]
@@ -201,7 +206,8 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_qtu10")
 
-[node name="Center" type="MarginContainer" parent="Menu"]
+[node name="Main" type="MarginContainer" parent="Menu"]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -213,29 +219,32 @@ theme_override_constants/margin_top = 100
 theme_override_constants/margin_right = 150
 theme_override_constants/margin_bottom = 100
 
-[node name="Lines" type="VBoxContainer" parent="Menu/Center"]
+[node name="Lines" type="VBoxContainer" parent="Menu/Main"]
 layout_mode = 2
 
-[node name="Tutorial" type="HBoxContainer" parent="Menu/Center/Lines"]
+[node name="Tutorial" type="HBoxContainer" parent="Menu/Main/Lines"]
 unique_name_in_owner = true
 layout_mode = 2
 alignment = 1
 
-[node name="Button" type="Button" parent="Menu/Center/Lines/Tutorial"]
+[node name="Tutorial_button" type="Button" parent="Menu/Main/Lines/Tutorial"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "Start Tutorial"
 
-[node name="Color" type="HBoxContainer" parent="Menu/Center/Lines"]
+[node name="Color" type="HBoxContainer" parent="Menu/Main/Lines"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Menu/Center/Lines/Color"]
+[node name="Color_label" type="Label" parent="Menu/Main/Lines/Color"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 text = "Color"
 vertical_alignment = 1
 
-[node name="Button" type="Button" parent="Menu/Center/Lines/Color"]
+[node name="Color_button" type="Button" parent="Menu/Main/Lines/Color"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(35, 35)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -243,18 +252,20 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_knq72")
 theme_override_styles/normal = SubResource("StyleBoxFlat_xvdhi")
 script = ExtResource("3_fj5cn")
 
-[node name="Size" type="HBoxContainer" parent="Menu/Center/Lines"]
+[node name="Size" type="HBoxContainer" parent="Menu/Main/Lines"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Menu/Center/Lines/Size"]
+[node name="Size_label" type="Label" parent="Menu/Main/Lines/Size"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 0
 text = "Size"
 vertical_alignment = 1
 
-[node name="Text" type="TextEdit" parent="Menu/Center/Lines/Size"]
+[node name="Size_text" type="TextEdit" parent="Menu/Main/Lines/Size"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(35, 35)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -262,17 +273,18 @@ tooltip_text = "Grid size will be size*size"
 text = "2"
 placeholder_text = "2"
 
-[node name="Volume" type="HBoxContainer" parent="Menu/Center/Lines"]
+[node name="Volume" type="HBoxContainer" parent="Menu/Main/Lines"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(35, 0)
 layout_mode = 2
 script = ExtResource("4_pxugv")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Menu/Center/Lines/Volume"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Menu/Main/Lines/Volume"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Label" type="Label" parent="Menu/Center/Lines/Volume/HBoxContainer"]
+[node name="Volume_label" type="Label" parent="Menu/Main/Lines/Volume/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Can be changed using +/-"
@@ -280,7 +292,7 @@ mouse_filter = 1
 text = "Volume"
 vertical_alignment = 1
 
-[node name="Unlock" type="CheckButton" parent="Menu/Center/Lines/Volume/HBoxContainer"]
+[node name="Unlock" type="CheckButton" parent="Menu/Main/Lines/Volume/HBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 35)
 layout_mode = 2
@@ -289,7 +301,7 @@ Unlocking allows you to set volume from 0.01% to 1000%
 "
 text = "Unlock"
 
-[node name="HSlider" type="HSlider" parent="Menu/Center/Lines/Volume"]
+[node name="VolSlider" type="HSlider" parent="Menu/Main/Lines/Volume"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
@@ -297,7 +309,7 @@ tooltip_text = "Can be changed using +/-"
 step = 0.01
 value = 1.0
 
-[node name="TextEdit" type="TextEdit" parent="Menu/Center/Lines/Volume"]
+[node name="VolEdit" type="TextEdit" parent="Menu/Main/Lines/Volume"]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 3
@@ -305,48 +317,52 @@ tooltip_text = "Can be changed using +/-"
 text = "1.0"
 placeholder_text = "1.0"
 
-[node name="BGM" type="HBoxContainer" parent="Menu/Center/Lines"]
+[node name="BGM" type="HBoxContainer" parent="Menu/Main/Lines"]
 unique_name_in_owner = true
 layout_mode = 2
 script = ExtResource("5_am1vj")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Menu/Center/Lines/BGM"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Menu/Main/Lines/BGM"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Label" type="Label" parent="Menu/Center/Lines/BGM/HBoxContainer"]
+[node name="Label" type="Label" parent="Menu/Main/Lines/BGM/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "BGM"
 vertical_alignment = 1
 
-[node name="Loop" type="CheckButton" parent="Menu/Center/Lines/BGM/HBoxContainer"]
+[node name="Loop" type="CheckButton" parent="Menu/Main/Lines/BGM/HBoxContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 35)
 layout_mode = 2
 text = "Loop"
 
-[node name="OptionButton" type="OptionButton" parent="Menu/Center/Lines/BGM"]
+[node name="BGM_select" type="OptionButton" parent="Menu/Main/Lines/BGM"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 35)
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="BGM_player" type="AudioStreamPlayer" parent="Menu/Center/Lines/BGM"]
+[node name="BGM_player" type="AudioStreamPlayer" parent="Menu/Main/Lines/BGM"]
 unique_name_in_owner = true
 volume_db = -20.0
 autoplay = true
 
-[node name="Type" type="HBoxContainer" parent="Menu/Center/Lines"]
+[node name="Type" type="HBoxContainer" parent="Menu/Main/Lines"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Menu/Center/Lines/Type"]
+[node name="Type_label" type="Label" parent="Menu/Main/Lines/Type"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 theme = SubResource("Theme_knq72")
 text = "Type"
 vertical_alignment = 1
 
-[node name="OptionButton" type="OptionButton" parent="Menu/Center/Lines/Type"]
+[node name="Type_select" type="OptionButton" parent="Menu/Main/Lines/Type"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 35)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -357,17 +373,19 @@ popup/item_0/id = 0
 popup/item_1/text = "RGB"
 popup/item_1/id = 1
 
-[node name="Difficulty" type="HBoxContainer" parent="Menu/Center/Lines"]
+[node name="Difficulty" type="HBoxContainer" parent="Menu/Main/Lines"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Menu/Center/Lines/Difficulty"]
+[node name="Difficulty_label" type="Label" parent="Menu/Main/Lines/Difficulty"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Difficullty"
 vertical_alignment = 1
 
-[node name="OptionButton" type="OptionButton" parent="Menu/Center/Lines/Difficulty"]
+[node name="Difficulty_select" type="OptionButton" parent="Menu/Main/Lines/Difficulty"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 35)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -383,86 +401,260 @@ popup/item_2/id = 2
 popup/item_3/text = "Extreme"
 popup/item_3/id = 3
 
-[node name="Language" type="HBoxContainer" parent="Menu/Center/Lines"]
+[node name="Language" type="HBoxContainer" parent="Menu/Main/Lines"]
 unique_name_in_owner = true
 layout_mode = 2
 script = ExtResource("7_knq72")
 
-[node name="Label" type="Label" parent="Menu/Center/Lines/Language"]
+[node name="Language_label" type="Label" parent="Menu/Main/Lines/Language"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Language"
 vertical_alignment = 1
 
-[node name="OptionButton" type="OptionButton" parent="Menu/Center/Lines/Language"]
+[node name="Language_select" type="OptionButton" parent="Menu/Main/Lines/Language"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 35)
 layout_mode = 2
 size_flags_horizontal = 3
 alignment = 1
 
-[node name="Separator" type="Control" parent="Menu/Center/Lines"]
+[node name="Separator" type="Control" parent="Menu/Main/Lines"]
 custom_minimum_size = Vector2(0, 35)
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Separator3" type="Control" parent="Menu/Center/Lines"]
+[node name="Separator3" type="Control" parent="Menu/Main/Lines"]
 custom_minimum_size = Vector2(0, 35)
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Controls" type="HBoxContainer" parent="Menu/Center/Lines"]
+[node name="Controls" type="HBoxContainer" parent="Menu/Main/Lines"]
 custom_minimum_size = Vector2(0, 35)
 layout_mode = 2
 
-[node name="Cancel" type="Button" parent="Menu/Center/Lines/Controls"]
+[node name="Cancel" type="Button" parent="Menu/Main/Lines/Controls"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(60, 35)
 layout_mode = 2
 text = "Cancel"
 script = ExtResource("3_ee4bf")
 
-[node name="Control" type="Control" parent="Menu/Center/Lines/Controls"]
+[node name="Control" type="Control" parent="Menu/Main/Lines/Controls"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Reset" type="Button" parent="Menu/Center/Lines/Controls"]
+[node name="Reset" type="Button" parent="Menu/Main/Lines/Controls"]
+unique_name_in_owner = true
 visible = false
 custom_minimum_size = Vector2(60, 35)
 layout_mode = 2
 text = "Reset"
 script = ExtResource("3_ee4bf")
 
-[node name="Control3" type="Control" parent="Menu/Center/Lines/Controls"]
+[node name="Control3" type="Control" parent="Menu/Main/Lines/Controls"]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Save" type="Button" parent="Menu/Center/Lines/Controls"]
+[node name="Login_button_a" type="Button" parent="Menu/Main/Lines/Controls"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 35)
+layout_mode = 2
+text = "Login"
+script = ExtResource("8_pi4e7")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Menu/Main/Lines/Controls"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Save" type="Button" parent="Menu/Main/Lines/Controls/HBoxContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(60, 35)
 layout_mode = 2
 text = "Save"
 script = ExtResource("4_kbped")
 
-[node name="Control2" type="Control" parent="Menu/Center/Lines/Controls"]
+[node name="Separator4" type="Control" parent="Menu/Main/Lines/Controls/HBoxContainer"]
+custom_minimum_size = Vector2(0, 35)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Load" type="Button" parent="Menu/Main/Lines/Controls/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 35)
+layout_mode = 2
+text = "Load
+"
+script = ExtResource("4_kbped")
+
+[node name="Control2" type="Control" parent="Menu/Main/Lines/Controls"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Ok" type="Button" parent="Menu/Center/Lines/Controls"]
+[node name="Ok" type="Button" parent="Menu/Main/Lines/Controls"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(60, 35)
 layout_mode = 2
 text = "Ok"
 script = ExtResource("5_kbped")
 
-[node name="Separator2" type="Control" parent="Menu/Center/Lines"]
+[node name="Separator2" type="Control" parent="Menu/Main/Lines"]
 custom_minimum_size = Vector2(0, 35)
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Label" type="Label" parent="Menu/Center/Lines"]
+[node name="Settings_label" type="Label" parent="Menu/Main/Lines"]
 self_modulate = Color(0.319255, 0.319255, 0.319255, 1)
 layout_mode = 2
 text = "You can always open Settings by pressing 
 ESC or double tap"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Login_screen" type="MarginContainer" parent="Menu"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 150
+theme_override_constants/margin_top = 100
+theme_override_constants/margin_right = 150
+theme_override_constants/margin_bottom = 100
+
+[node name="Lines" type="VBoxContainer" parent="Menu/Login_screen"]
+layout_mode = 2
+
+[node name="Register" type="HBoxContainer" parent="Menu/Login_screen/Lines"]
+layout_mode = 2
+alignment = 1
+
+[node name="Register_button" type="Button" parent="Menu/Login_screen/Lines/Register"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Register"
+
+[node name="Separator3" type="Control" parent="Menu/Login_screen/Lines"]
+custom_minimum_size = Vector2(0, 35)
+layout_mode = 2
+
+[node name="Username" type="TextEdit" parent="Menu/Login_screen/Lines"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(35, 35)
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Username"
+
+[node name="Text" type="Label" parent="Menu/Login_screen/Lines"]
+self_modulate = Color(1, 1, 1, 0.588235)
+custom_minimum_size = Vector2(35, 23)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "or"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Email" type="TextEdit" parent="Menu/Login_screen/Lines"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 35)
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Can be changed using +/-"
+placeholder_text = "Email address"
+
+[node name="Separator" type="Control" parent="Menu/Login_screen/Lines"]
+custom_minimum_size = Vector2(0, 35)
+layout_mode = 2
+
+[node name="Register2" type="HBoxContainer" parent="Menu/Login_screen/Lines"]
+layout_mode = 2
+alignment = 1
+
+[node name="PW_reset" type="TextureButton" parent="Menu/Login_screen/Lines/Register2"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(35, 0)
+layout_mode = 2
+tooltip_text = "Request password reset"
+texture_normal = ExtResource("10_m4egf")
+texture_pressed = ExtResource("11_pi4e7")
+ignore_texture_size = true
+stretch_mode = 4
+
+[node name="PW_text" type="TextEdit" parent="Menu/Login_screen/Lines/Register2"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 35)
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Can be changed using +/-"
+placeholder_text = "Password"
+
+[node name="Separator4" type="Control" parent="Menu/Login_screen/Lines"]
+visible = false
+custom_minimum_size = Vector2(0, 35)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Terms" type="RichTextLabel" parent="Menu/Login_screen/Lines"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+fit_content = true
+
+[node name="Separator6" type="Control" parent="Menu/Login_screen/Lines"]
+custom_minimum_size = Vector2(0, 35)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Controls" type="HBoxContainer" parent="Menu/Login_screen/Lines"]
+custom_minimum_size = Vector2(0, 35)
+layout_mode = 2
+
+[node name="Cancel" type="Button" parent="Menu/Login_screen/Lines/Controls"]
+custom_minimum_size = Vector2(60, 35)
+layout_mode = 2
+text = "Cancel"
+script = ExtResource("3_ee4bf")
+
+[node name="Control" type="Control" parent="Menu/Login_screen/Lines/Controls"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Control3" type="Control" parent="Menu/Login_screen/Lines/Controls"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Login_button_b" type="Button" parent="Menu/Login_screen/Lines/Controls"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 35)
+layout_mode = 2
+text = "Log in"
+script = ExtResource("13_kuuv8")
+
+[node name="Control2" type="Control" parent="Menu/Login_screen/Lines/Controls"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="2DO" type="Button" parent="Menu/Login_screen/Lines/Controls"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 35)
+layout_mode = 2
+text = "2DO"
+
+[node name="Separator2" type="Control" parent="Menu/Login_screen/Lines"]
+custom_minimum_size = Vector2(0, 35)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="Menu/Login_screen/Lines"]
+self_modulate = Color(0.319255, 0.319255, 0.319255, 1)
+layout_mode = 2
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -604,19 +796,29 @@ libraries = {
 unique_name_in_owner = true
 wait_time = 3.0
 
-[connection signal="pressed" from="Menu/Center/Lines/Tutorial/Button" to="Field" method="_on_button_pressed"]
-[connection signal="pressed" from="Menu/Center/Lines/Color/Button" to="Menu/Center/Lines/Color/Button" method="_on_pressed"]
-[connection signal="toggled" from="Menu/Center/Lines/Volume/HBoxContainer/Unlock" to="Menu/Center/Lines/Volume" method="_on_unlock_toggled"]
-[connection signal="changed" from="Menu/Center/Lines/Volume/HSlider" to="Menu/Center/Lines/Volume" method="_on_h_slider_changed"]
-[connection signal="value_changed" from="Menu/Center/Lines/Volume/HSlider" to="Menu/Center/Lines/Volume" method="_on_h_slider_value_changed"]
-[connection signal="text_changed" from="Menu/Center/Lines/Volume/TextEdit" to="Menu/Center/Lines/Volume" method="_on_text_edit_text_changed"]
-[connection signal="toggled" from="Menu/Center/Lines/BGM/HBoxContainer/Loop" to="Menu/Center/Lines/BGM" method="_on_loop_toggled"]
-[connection signal="item_selected" from="Menu/Center/Lines/BGM/OptionButton" to="Menu/Center/Lines/BGM" method="_on_option_button_item_selected"]
-[connection signal="finished" from="Menu/Center/Lines/BGM/BGM_player" to="Menu/Center/Lines/BGM" method="_on_bgm_finished"]
-[connection signal="pressed" from="Menu/Center/Lines/Controls/Cancel" to="Menu/Center/Lines/Controls/Cancel" method="_on_pressed"]
-[connection signal="pressed" from="Menu/Center/Lines/Controls/Reset" to="Menu/Center/Lines/Controls/Reset" method="_on_pressed"]
-[connection signal="pressed" from="Menu/Center/Lines/Controls/Save" to="Menu/Center/Lines/Controls/Save" method="_on_pressed"]
-[connection signal="pressed" from="Menu/Center/Lines/Controls/Ok" to="Menu/Center/Lines/Controls/Ok" method="_on_pressed"]
+[node name="FireBase" type="Control" parent="."]
+unique_name_in_owner = true
+anchors_preset = 0
+script = ExtResource("16_oq4si")
+
+[connection signal="pressed" from="Menu/Main/Lines/Tutorial/Tutorial_button" to="Field" method="_on_button_pressed"]
+[connection signal="pressed" from="Menu/Main/Lines/Color/Color_button" to="Menu/Main/Lines/Color/Color_button" method="_on_pressed"]
+[connection signal="toggled" from="Menu/Main/Lines/Volume/HBoxContainer/Unlock" to="Menu/Main/Lines/Volume" method="_on_unlock_toggled"]
+[connection signal="changed" from="Menu/Main/Lines/Volume/VolSlider" to="Menu/Main/Lines/Volume" method="_on_h_slider_changed"]
+[connection signal="value_changed" from="Menu/Main/Lines/Volume/VolSlider" to="Menu/Main/Lines/Volume" method="_on_h_slider_value_changed"]
+[connection signal="text_changed" from="Menu/Main/Lines/Volume/VolEdit" to="Menu/Main/Lines/Volume" method="_on_text_edit_text_changed"]
+[connection signal="toggled" from="Menu/Main/Lines/BGM/HBoxContainer/Loop" to="Menu/Main/Lines/BGM" method="_on_loop_toggled"]
+[connection signal="item_selected" from="Menu/Main/Lines/BGM/BGM_select" to="Menu/Main/Lines/BGM" method="_on_option_button_item_selected"]
+[connection signal="finished" from="Menu/Main/Lines/BGM/BGM_player" to="Menu/Main/Lines/BGM" method="_on_bgm_finished"]
+[connection signal="pressed" from="Menu/Main/Lines/Controls/Cancel" to="Menu/Main/Lines/Controls/Cancel" method="_on_pressed"]
+[connection signal="pressed" from="Menu/Main/Lines/Controls/Reset" to="Menu/Main/Lines/Controls/Reset" method="_on_pressed"]
+[connection signal="pressed" from="Menu/Main/Lines/Controls/Login_button_a" to="Menu/Main/Lines/Controls/Login_button_a" method="_on_pressed"]
+[connection signal="pressed" from="Menu/Main/Lines/Controls/HBoxContainer/Save" to="Menu/Main/Lines/Controls/HBoxContainer/Save" method="_on_pressed"]
+[connection signal="pressed" from="Menu/Main/Lines/Controls/HBoxContainer/Load" to="Menu/Main/Lines/Controls/HBoxContainer/Load" method="_on_pressed"]
+[connection signal="pressed" from="Menu/Main/Lines/Controls/Ok" to="Menu/Main/Lines/Controls/Ok" method="_on_pressed"]
+[connection signal="pressed" from="Menu/Login_screen/Lines/Register/Register_button" to="Field" method="_on_button_pressed"]
+[connection signal="pressed" from="Menu/Login_screen/Lines/Controls/Cancel" to="Menu/Login_screen/Lines/Controls/Cancel" method="_on_pressed"]
+[connection signal="pressed" from="Menu/Login_screen/Lines/Controls/Login_button_b" to="Menu/Login_screen/Lines/Controls/Login_button_b" method="_on_pressed"]
 [connection signal="pressed" from="Menu/Warning/HBoxContainer/Decline" to="Menu/Warning" method="_on_decline_pressed"]
 [connection signal="pressed" from="Menu/Warning/HBoxContainer/Accept" to="Menu/Warning" method="_on_button_pressed"]
 [connection signal="color_changed" from="ColorPicker/ColorPicker" to="ColorPicker/ColorPicker" method="_on_color_changed"]

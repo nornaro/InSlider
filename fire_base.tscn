@@ -1,0 +1,25 @@
+[gd_scene load_steps=2 format=3 uid="uid://cxj7f2svonas1"]
+
+[ext_resource type="Script" uid="uid://b87bmyar1m3ru" path="res://fire_base.gd" id="1_ag4q5"]
+
+[node name="FireBase" type="Node"]
+script = ExtResource("1_ag4q5")
+
+[node name="Button" type="Button" parent="."]
+custom_minimum_size = Vector2(50, 50)
+offset_left = 323.0
+offset_top = 337.0
+offset_right = 373.0
+offset_bottom = 387.0
+text = "R"
+
+[node name="Button2" type="Button" parent="."]
+custom_minimum_size = Vector2(50, 50)
+offset_left = 379.0
+offset_top = 337.0
+offset_right = 429.0
+offset_bottom = 387.0
+text = "W"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="Button2" to="." method="_on_button_2_pressed"]

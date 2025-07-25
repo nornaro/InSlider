@@ -3,6 +3,7 @@
 /android/
 addons/
 Export/
+temp/
 *.import
 *.tmp
 *.uid"

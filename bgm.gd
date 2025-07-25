@@ -1,6 +1,5 @@
 extends Node
 
-@onready var option_button: OptionButton = $OptionButton
 @onready var bgm_tress: Array = [
 	preload("res://BGM/Acoustic Guitar.tres"),
 	preload("res://BGM/Bubble Baby.tres"),
@@ -46,9 +45,9 @@ func bgm_from_path(paths:Array[String]) -> void:
 			})
 
 func populate_option_button() -> void:
-	option_button.clear()
+	%BGM_select.clear()
 	for track in bgm_tracks:
-		option_button.add_item(track["name"])
+		%BGM_select.add_item(track["name"])
 
 func play_next(nxt:int = bgm_num+1) -> void:
 	if nxt == bgm_history.size():
@@ -66,7 +65,7 @@ func play_track(index: int) -> void:
 	var track:Dictionary = bgm_tracks[index]
 	%BGM_player.stream = track["stream"]
 	%BGM_player.play()
-	option_button.select(index)
+	%BGM_select.select(index)
 
 func _on_option_button_item_selected(index: int) -> void:
 	play_track(index)

@@ -19,6 +19,7 @@ config/icon="uid://dqfidnn4bcq5a"
 [autoload]
 
 Global="*res://global.gd"
+Firebase="*res://addons/godot-firebase/firebase/firebase.tscn"
 
 [debug]
 
@@ -31,6 +32,10 @@ window/size/viewport_height=720
 window/size/resizable=false
 window/size/borderless=true
 window/stretch/mode="canvas_items"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/godot-firebase/plugin.cfg", "res://addons/http-sse-client/plugin.cfg")
 
 [input]
 
